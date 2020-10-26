@@ -17,6 +17,14 @@ public class Main {
         Scanner ler = new Scanner(System.in);
         List<Cidade> listaCidade = new ArrayList<Cidade>();
 
+        //Dados para o AntColonyOptimization
+        int numeroMaximoIteracao;
+        Double influenciaFeromonio; //alfa
+        Double influenciaDistancia; //beta
+        Double taxaEvaporacaoFeromonio;
+        Double valorInicialFeromonio;
+        Double constanteAtualizacaoFeromonio;
+
         System.out.println("Infome o documento que deseja ler: ");
         System.out.println("[1] - att48.tsp");
         System.out.println("[2] - bays29.tsp");
@@ -76,18 +84,30 @@ public class Main {
             System.err.printf("\n\n\n\nErro na abertura do arquivo: %s.\n\n", e.getMessage());
         }
         
-        ler.close();
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
-        // //exibe todas as cidades - apenas demonstracao
-        // for (Cidade cidade : listaCidade) {
-        //     System.out.println(cidade.toString());
-        // }
-            
-        AntColonyOptimization.run(listaCidade);
+        System.out.print("Digite o numero de iteracoes desejado:");
+        numeroMaximoIteracao = Integer.parseInt(ler.nextLine());
 
+        System.out.print("Digite o valor de influencia do feromonio (padrao = 1): ");
+        influenciaFeromonio = Double.parseDouble(ler.nextLine());
 
+        System.out.print("Digite o valor de influencia da distancia (padrão = 1): ");
+        influenciaDistancia = Double.parseDouble(ler.nextLine());
+
+        System.out.print("Digite o valor da taxa de evaporacao do feromonio (padrao = 0.1): ");
+        taxaEvaporacaoFeromonio = Double.parseDouble(ler.nextLine());
+
+        System.out.print("Digite o valor inicial do feromonio para todas as rotas (padrao = 0.1): ");
+        valorInicialFeromonio = Double.parseDouble(ler.nextLine());
+
+        System.out.print("Digite o valor da constante de atualizacao do feromonio (padrao = 10): ");
+        constanteAtualizacaoFeromonio = Double.parseDouble(ler.nextLine());
 
         
+        AntColonyOptimization.run(listaCidade, numeroMaximoIteracao, influenciaFeromonio, influenciaDistancia, taxaEvaporacaoFeromonio, valorInicialFeromonio, constanteAtualizacaoFeromonio);
+
+        ler.close();
     }
 
 }
