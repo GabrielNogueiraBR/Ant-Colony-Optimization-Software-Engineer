@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import models.Cidade;
+import aco.AntColonyOptimization;
+import aco.Cidade;
 
 public class Main {
     
@@ -74,13 +75,19 @@ public class Main {
         catch(IOException e){
             System.err.printf("\n\n\n\nErro na abertura do arquivo: %s.\n\n", e.getMessage());
         }
+        
+        ler.close();
 
         // //exibe todas as cidades - apenas demonstracao
         // for (Cidade cidade : listaCidade) {
         //     System.out.println(cidade.toString());
         // }
-    
-        ler.close();
+            
+        AntColonyOptimization.run(listaCidade);
+
+
+
+        
     }
 
 }

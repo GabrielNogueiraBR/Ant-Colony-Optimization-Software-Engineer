@@ -1,11 +1,9 @@
-package models;
+package aco;
 
 public class Cidade {
     private int numeroCidade;
     private Double coordenadaX;
     private Double coordenadaY;
-    
-    
     
     public int getNumeroCidade() {
 		return numeroCidade;
@@ -31,7 +29,25 @@ public class Cidade {
 		this.coordenadaX = coordenadaX;
 		this.coordenadaY = coordenadaY;
 	}
-    
+	
+	public Double distanciaEntreCidadeFinal(Cidade cidadeFinal){
+
+		Double distanciaEmX, distanciaEmY, somaAoQuadrado, distancia;
+
+		distanciaEmX = Math.abs(cidadeFinal.getCoordenadaX() - this.coordenadaX);
+		distanciaEmY = Math.abs(cidadeFinal.getCoordenadaY() - this.coordenadaY);
+
+		somaAoQuadrado = Math.pow(distanciaEmX, 2) + Math.pow(distanciaEmY, 2);
+		distancia = Math.sqrt(somaAoQuadrado);
+
+		return distancia;
+
+	}
+
+	public Boolean isDiferente(Cidade cidade){
+		return !(this == cidade);
+	}
+
     @Override
 	public String toString() {
 		return "Cidade [coordenadaX=" + coordenadaX + ", coordenadaY=" + coordenadaY + ", numeroCidade=" + numeroCidade
