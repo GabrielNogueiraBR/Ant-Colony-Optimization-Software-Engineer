@@ -53,6 +53,12 @@ public class Rota {
         this.valorFeromonio =valorInicialFeromonio;
         this.distancia = cidade1.distanciaEntreCidadeFinal(cidade2);
     }
+
+    @Override
+    public String toString() {
+        return "Rota [cidade1=" + cidade1 + ", cidade2=" + cidade2 + ", distancia=" + distancia + ", valorFeromonio="
+                + valorFeromonio + "]";
+    }
     
     
 }
