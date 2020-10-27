@@ -70,6 +70,10 @@ public class Rota {
         this.probabilidadeEscolha = produtoFeromonioInversoDistancia()/ somatorioDeTodasInfluencias;
 
     }
+
+    public void setProbabilidadeEscolha(Double probabilidadeEscolha) {
+        this.probabilidadeEscolha = probabilidadeEscolha;
+    }
     
     
 }
