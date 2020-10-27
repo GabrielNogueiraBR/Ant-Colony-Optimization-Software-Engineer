@@ -95,7 +95,7 @@ public class Main {
         System.out.print("Digite o valor de influencia da distancia (padrão = 1): ");
         influenciaDistancia = Double.parseDouble(ler.nextLine());
 
-        System.out.print("Digite o valor da taxa de evaporacao do feromonio (padrao = 0.1): ");
+        System.out.print("Digite o valor da taxa de evaporacao do feromonio (padrao = 0.01): ");
         taxaEvaporacaoFeromonio = Double.parseDouble(ler.nextLine());
 
         System.out.print("Digite o valor inicial do feromonio para todas as rotas (padrao = 0.1): ");

@@ -2,25 +2,26 @@ package aco;
 
 //Classe que vai dizer a rota entre duas cidades, trazendo informações como a sua distancia e a taxa de feromonios presente na rota
 public class Rota {
-    private Cidade cidade1;
-    private Cidade cidade2;
+    private Cidade cidadeOrigem;
+    private Cidade cidadeDestino;
     private Double distancia;
     private Double valorFeromonio;
+    private Double probabilidadeEscolha;
 
     public Cidade getCidade1() {
-        return cidade1;
+        return cidadeOrigem;
     }
 
     public void setCidade1(Cidade cidade1) {
-        this.cidade1 = cidade1;
+        this.cidadeOrigem = cidade1;
     }
 
     public Cidade getCidade2() {
-        return cidade2;
+        return cidadeDestino;
     }
 
     public void setCidade2(Cidade cidade2) {
-        this.cidade2 = cidade2;
+        this.cidadeDestino = cidade2;
     }
 
     public Double getDistancia() {
@@ -48,16 +49,26 @@ public class Rota {
     }
 
     public Rota(Cidade cidade1, Cidade cidade2, Double valorInicialFeromonio) {
-        this.cidade1 = cidade1;
-        this.cidade2 = cidade2;
+        this.cidadeOrigem = cidade1;
+        this.cidadeDestino = cidade2;
         this.valorFeromonio =valorInicialFeromonio;
         this.distancia = cidade1.distanciaEntreCidadeFinal(cidade2);
     }
 
     @Override
     public String toString() {
-        return "Rota [cidade1=" + cidade1 + ", cidade2=" + cidade2 + ", distancia=" + distancia + ", valorFeromonio="
-                + valorFeromonio + "]";
+        return "Rota [cidadeDestino=" + cidadeDestino.getNumeroCidade() + ", cidadeOrigem=" + cidadeOrigem.getNumeroCidade() + ", distancia=" + distancia
+                + ", probabilidadeEscolha=" + probabilidadeEscolha + ", valorFeromonio=" + valorFeromonio + "]";
+    }
+
+    public Double getProbabilidadeEscolha() {
+        return probabilidadeEscolha;
+    }
+
+    public void atualizaProbabilidadeEscolha(Double somatorioDeTodasInfluencias) {
+        
+        this.probabilidadeEscolha = produtoFeromonioInversoDistancia()/ somatorioDeTodasInfluencias;
+
     }
     
     
