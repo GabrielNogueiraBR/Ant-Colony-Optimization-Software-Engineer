@@ -81,7 +81,7 @@ public class Rota {
     
     public void atualizaProbabilidadeEscolha(List<Rota> todasRotas){
         
-        List<Rota> rotasCidadeOrigem = getAllRotasCidadeOrigem(todasRotas);
+        List<Rota> rotasCidadeOrigem = Rota.getAllRotasCidade(todasRotas,this.cidadeOrigem);
         Double somatorio = 0.0;
 
         for (Rota rota : rotasCidadeOrigem) {
@@ -91,12 +91,12 @@ public class Rota {
         this.probabilidadeEscolha = this.produtoFeromonioInversoDistancia() / somatorio;
     }
 
-    public List<Rota> getAllRotasCidadeOrigem (List<Rota> todasRotas){
+    public static List<Rota> getAllRotasCidade (List<Rota> todasRotas, Cidade cidadeBuscada){
 
         List<Rota> rotasCidadeOrigem = new ArrayList<Rota>();
 
         for (Rota rota : todasRotas) {
-            if(rota.isCidadeOrigem(this.cidadeOrigem)){
+            if(rota.isCidadeOrigem(cidadeBuscada)){
                 rotasCidadeOrigem.add(rota);
             }
         }
