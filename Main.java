@@ -1,12 +1,14 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.Normalizer.Form;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import aco.AntColonyOptimization;
 import aco.Cidade;
+import aco.Formiga;
 import aco.Rota;
 
 public class Main {
@@ -123,7 +125,14 @@ public class Main {
             rota.atualizaProbabilidadeEscolha(listaRota);
         }
 
+        Formiga formiga = new Formiga();
+        formiga.setCidadeOrigem(listaCidade.get(0));
+
         //realizar a primeira iteracao
+        formiga.run(listaRota, formiga.getCidadeOrigem());
+
+        //exibe a rota
+        System.out.println(formiga.exibeRotaPercorrida());
 
         //atualizar a taxa de feromonios com base nas formigas e nas rotas
 

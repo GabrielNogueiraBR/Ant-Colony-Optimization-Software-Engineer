@@ -10,6 +10,7 @@ public class Rota {
     private Double distancia;
     private Double valorFeromonio;
     private Double probabilidadeEscolha;
+    private Double somaProbabilidadeEscolha;
 
     public Cidade getCidadeOrigem() {
         return cidadeOrigem;
@@ -91,6 +92,26 @@ public class Rota {
         this.probabilidadeEscolha = this.produtoFeromonioInversoDistancia() / somatorio;
     }
 
+    public Boolean isCidadeOrigem(Cidade cidade){
+        if(this.cidadeOrigem.equals(cidade))
+            return true;
+        return false;
+    }
+
+    public Boolean isCidadeDestino(Cidade cidade){
+        if(this.cidadeDestino.equals(cidade))
+            return true;
+        return false;
+    }
+
+    public Double getSomaProbabilidadeEscolha() {
+        return somaProbabilidadeEscolha;
+    }
+
+    public void setSomaProbabilidadeEscolha(Double somaProbabilidadeEscolha) {
+        this.somaProbabilidadeEscolha = somaProbabilidadeEscolha;
+    }
+
     public static List<Rota> getAllRotasCidade (List<Rota> todasRotas, Cidade cidadeBuscada){
 
         List<Rota> rotasCidadeOrigem = new ArrayList<Rota>();
@@ -104,10 +125,58 @@ public class Rota {
         return rotasCidadeOrigem;
     }
 
-    public Boolean isCidadeOrigem(Cidade cidade){
-        if(this.cidadeOrigem.equals(cidade))
-            return true;
-        return false;
+    //sorteia uma rota com base em uma lista
+    public static int sorteiaRotaPorCidade(List<Rota> rotasDaCidadeOrigem){
+        Double porcentagemTotal = 0.0;
+        Double sorteio = Math.random(); //valor entre 0.0 e 1.0
+        int retorno = 0, indice = 0;
+
+        //faz uma agregacao na porcentagem para podermos sortear um numero
+        for (Rota rota : rotasDaCidadeOrigem) {
+            porcentagemTotal += rota.getProbabilidadeEscolha();
+            rota.setSomaProbabilidadeEscolha(porcentagemTotal);
+
+            //definimos aquele valor 0.0001 para ser uma aproximacao
+            if(rota.getSomaProbabilidadeEscolha() <= (sorteio + 0.001)){
+                retorno = indice; //indice da rota
+            }
+
+            indice++;
+        }
+
+        //Exemplo
+        // soma[0] = 2.16
+        // soma[1] = 2.16 + 1.76 = 3.92
+        // soma[2] = 3.92 + 2.04 = 5.96
+
+        return retorno;
+    }
+
+
+    //exclui todas as rotas de uma lista a partir da cidade de origem
+    public static List<Rota> excluiRotasDaCidadeOrigem(List<Rota> rotas, Cidade cidadeOrigem){
+
+        List<Rota> novasRotas = new ArrayList<Rota>();
+
+        for (Rota rota : rotas) {
+            if(rota.isCidadeOrigem(cidadeOrigem) == false){
+                novasRotas.add(rota);
+            }
+        }
+        return novasRotas;
+    }
+    
+    //exclui todas as rotas de uma lista a partir da cidade de destino
+    public static List<Rota> excluiRotasDaCidadeDestino(List<Rota> rotas, Cidade cidadeDestino){
+
+        List<Rota> novasRotas = new ArrayList<Rota>();
+
+        for (Rota rota : rotas) {
+            if(rota.isCidadeDestino(cidadeDestino) == false){
+                novasRotas.add(rota);
+            }
+        }
+        return novasRotas;
     }
     
 }
