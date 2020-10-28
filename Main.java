@@ -118,12 +118,10 @@ public class Main {
         //definir a tabela de rotas
         listaRota = constroiRotas(listaCidade,valorInicialFeromonio);
         
+        //atualizando a tabela de probabilidades de escolha
         for (Rota rota : listaRota) {
             rota.atualizaProbabilidadeEscolha(listaRota);
         }
-        
-        
-
 
         //realizar a primeira iteracao
 
