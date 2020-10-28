@@ -30,7 +30,7 @@ public class Cidade {
 		this.coordenadaY = coordenadaY;
 	}
 	
-	public Double distanciaEntreCidadeFinal(Cidade cidadeFinal){
+	public Double distanciaEntreCidades(Cidade cidadeFinal){
 
 		Double distanciaEmX, distanciaEmY, somaAoQuadrado, distancia;
 

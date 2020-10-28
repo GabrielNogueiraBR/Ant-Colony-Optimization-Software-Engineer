@@ -1,5 +1,8 @@
 package aco;
 
+import java.util.ArrayList;
+import java.util.List;
+
 //Classe que vai dizer a rota entre duas cidades, trazendo informações como a sua distancia e a taxa de feromonios presente na rota
 public class Rota {
     private Cidade cidadeOrigem;
@@ -8,36 +11,28 @@ public class Rota {
     private Double valorFeromonio;
     private Double probabilidadeEscolha;
 
-    public Cidade getCidade1() {
+    public Cidade getCidadeOrigem() {
         return cidadeOrigem;
     }
 
-    public void setCidade1(Cidade cidade1) {
-        this.cidadeOrigem = cidade1;
+    public void setCidadeOrigem(Cidade cidadeOrigem) {
+        this.cidadeOrigem = cidadeOrigem;
     }
 
-    public Cidade getCidade2() {
+    public Cidade getCidadeDestino() {
         return cidadeDestino;
     }
 
-    public void setCidade2(Cidade cidade2) {
-        this.cidadeDestino = cidade2;
+    public void setCidadeDestino(Cidade cidadeDestino) {
+        this.cidadeDestino = cidadeDestino;
     }
 
     public Double getDistancia() {
         return distancia;
     }
 
-    public void setDistancia(Double distancia) {
-        this.distancia = distancia;
-    }
-
     public Double getValorFeromonio() {
         return valorFeromonio;
-    }
-
-    public void setValorFeromonio(Double valorFeromonio) {
-        this.valorFeromonio = valorFeromonio;
     }
 
     public Double inversoDistancia(){
@@ -48,11 +43,11 @@ public class Rota {
         return (inversoDistancia() * valorFeromonio);
     }
 
-    public Rota(Cidade cidade1, Cidade cidade2, Double valorInicialFeromonio) {
-        this.cidadeOrigem = cidade1;
-        this.cidadeDestino = cidade2;
+    public Rota(Cidade cidadeOrigem, Cidade cidadeDestino, Double valorInicialFeromonio) {
+        this.cidadeOrigem = cidadeOrigem;
+        this.cidadeDestino = cidadeDestino;
         this.valorFeromonio =valorInicialFeromonio;
-        this.distancia = cidade1.distanciaEntreCidadeFinal(cidade2);
+        this.distancia = cidadeOrigem.distanciaEntreCidades(cidadeDestino);
     }
 
     @Override
@@ -65,15 +60,54 @@ public class Rota {
         return probabilidadeEscolha;
     }
 
-    public void atualizaProbabilidadeEscolha(Double somatorioDeTodasInfluencias) {
-        
-        this.probabilidadeEscolha = produtoFeromonioInversoDistancia()/ somatorioDeTodasInfluencias;
+    //Com base em uma lista de formigas, realizar a atualizacao da concentracao de feromonios
+    public void atualizaConcentracaoFeromonio(List<Formiga> formigas){
 
     }
 
-    public void setProbabilidadeEscolha(Double probabilidadeEscolha) {
-        this.probabilidadeEscolha = probabilidadeEscolha;
+    public Boolean isRotaEquivalente(Rota rotaEquivalente){
+        if(this.distancia == rotaEquivalente.getDistancia()){
+            
+            if(this.cidadeDestino == rotaEquivalente.getCidadeDestino())
+                if(this.cidadeOrigem == rotaEquivalente.getCidadeOrigem())
+                    return true;
+            else if(this.cidadeDestino == rotaEquivalente.getCidadeOrigem())
+                if(this.cidadeOrigem == rotaEquivalente.getCidadeDestino())
+                    return true;
+        }
+
+        return false;
     }
     
+    public void atualizaProbabilidadeEscolha(List<Rota> todasRotas){
+        
+        List<Rota> rotasCidadeOrigem = getAllRotasCidadeOrigem(todasRotas);
+        Double somatorio = 0.0;
+
+        for (Rota rota : rotasCidadeOrigem) {
+            somatorio += rota.produtoFeromonioInversoDistancia();
+        }
+
+        this.probabilidadeEscolha = this.produtoFeromonioInversoDistancia() / somatorio;
+    }
+
+    public List<Rota> getAllRotasCidadeOrigem (List<Rota> todasRotas){
+
+        List<Rota> rotasCidadeOrigem = new ArrayList<Rota>();
+
+        for (Rota rota : todasRotas) {
+            if(rota.isCidadeOrigem(this.cidadeOrigem)){
+                rotasCidadeOrigem.add(rota);
+            }
+        }
+
+        return rotasCidadeOrigem;
+    }
+
+    public Boolean isCidadeOrigem(Cidade cidade){
+        if(this.cidadeOrigem.equals(cidade))
+            return true;
+        return false;
+    }
     
 }
