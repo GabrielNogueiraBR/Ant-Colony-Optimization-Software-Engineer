@@ -61,9 +61,9 @@ public class Rota {
         return probabilidadeEscolha;
     }
 
-    //Com base em uma lista de formigas, realizar a atualizacao da concentracao de feromonios
-    public void atualizaConcentracaoFeromonio(List<Formiga> formigas){
-
+    //realiza a evaporacao do feromonio, com base na taxa de evaporacao
+    public void evaporacaoFeromonio(Double taxaEvaporacaoFeromonio){
+        this.valorFeromonio = (1 - taxaEvaporacaoFeromonio) * valorFeromonio;
     }
 
     public Boolean isRotaEquivalente(Rota rotaEquivalente){
@@ -78,6 +78,10 @@ public class Rota {
         }
 
         return false;
+    }
+
+    private void adicionaFeromonioDeixadoFormiga(Double somatorioConcentracaoFeromonioFormigas) {
+        this.valorFeromonio += somatorioConcentracaoFeromonioFormigas;
     }
     
     public void atualizaProbabilidadeEscolha(List<Rota> todasRotas){
@@ -178,5 +182,37 @@ public class Rota {
         }
         return novasRotas;
     }
+
+    public static List<Rota> realizaEvaporacaoFeromonioRotas(List<Rota> rotas, Double taxaEvaporacaoFeromonio, List<Cidade> cidades){
+        
+        List<Rota> novasRotas = new ArrayList<Rota>();
+        Double somatorioConcentracaoFeromonioFormigas; //a soma da concentracao deixada por cada formiga em determinada rota
+
+        for (Rota rota : rotas) {
+            somatorioConcentracaoFeromonioFormigas = 0.0; //inicialmente essa concentracao e 0
+            
+            //varrer todas as cidades para analisar cada formiga
+            for (Cidade cidade : cidades) {
+                Formiga formiga = cidade.getFormiga();
+
+                //realizar o somatorio de todas as concentracoes de feromonio deixados na rota, a partir das formigas
+                if(formiga.isRotaPercorrida(rota) == true){
+                    somatorioConcentracaoFeromonioFormigas += formiga.quantidadeFeromonioDepositado();
+                }
+
+            }
+
+            //evaporacao dos feromonios na rota em questao
+            rota.evaporacaoFeromonio(taxaEvaporacaoFeromonio);
+
+            //soma as concentracoes de feromonio depositadas pelas formigas
+            rota.adicionaFeromonioDeixadoFormiga(somatorioConcentracaoFeromonioFormigas);
+
+            novasRotas.add(rota);
+        }
+        return novasRotas;
+    }
+
+    
     
 }
