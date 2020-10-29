@@ -1,15 +1,12 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.Normalizer.Form;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import aco.AntColonyOptimization;
 import aco.Cidade;
-import aco.Formiga;
-import aco.Rota;
 
 public class Main {
     
@@ -19,7 +16,7 @@ public class Main {
         String nomeArquivo;
         Scanner ler = new Scanner(System.in);
         List<Cidade> listaCidade = new ArrayList<Cidade>();
-        List<Rota> listaRota;
+        
 
         //Dados para o AntColonyOptimization
         int numeroMaximoIteracao;
@@ -92,7 +89,7 @@ public class Main {
 
         System.out.print("Digite o numero de iteracoes desejado:");
         //numeroMaximoIteracao = Integer.parseInt(ler.nextLine());
-        numeroMaximoIteracao = 1;
+        numeroMaximoIteracao = 100;
 
         System.out.print("Digite o valor de influencia do feromonio (padrao = 1): ");
         //influenciaFeromonio = Double.parseDouble(ler.nextLine());
@@ -117,70 +114,10 @@ public class Main {
 
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         
-        //definir a tabela de rotas
-        listaRota = constroiRotas(listaCidade,valorInicialFeromonio);
-        
-        //atualizando a tabela de probabilidades de escolha
-        for (Rota rota : listaRota) {
-            rota.atualizaProbabilidadeEscolha(listaRota);
-        }
-
-
-        
-        for (Cidade cidade : listaCidade) {
-            System.out.println("\n\n\n\n");
-            //colocar um formiga em cada cidade
-            cidade.adicionaFormiga();
-            
-            //faz a formiga percorrer todas as rotas com base na cidade de origem
-            cidade.getFormiga().run(listaRota, cidade.getFormiga().getCidadeOrigem());
-
-            //atualiza a distancia percorrida por cada formiga
-            cidade.getFormiga().defineDistanciaPercorrida();
-
-            //exibe a rota percorrida pela formiga
-            System.out.println(cidade.getFormiga().exibeRotaPercorrida());
-
-            System.out.println("Distancia Percorrida: " + cidade.getFormiga().getDistanciaPercorrida());
-        }
-
-
-        // Formiga formiga = new Formiga();
-        // formiga.setCidadeOrigem(listaCidade.get(0));
-
-        // //realizar a primeira iteracao
-        // formiga.run(listaRota, formiga.getCidadeOrigem());
-
-        // //exibe a rota
-        // System.out.println(formiga.exibeRotaPercorrida());
-
-        //realizar a evaporacao do feromonio em todas as rotas
-
-        //calcular o feromonio depositado por cada formiga em determinada rota
-
-        //realizar o somatorio do feromonio depositado em cada rota
-
-        //atualizar a taxa de feromonios com base nas formigas e nas rotas
-
-
         ler.close();
-    }
 
+        AntColonyOptimization.run(listaCidade, numeroMaximoIteracao, influenciaFeromonio, influenciaDistancia, taxaEvaporacaoFeromonio, valorInicialFeromonio, constanteAtualizacaoFeromonio);
 
-    public static List<Rota> constroiRotas(List<Cidade> cidades, Double valorInicialFeromonio){
-        List<Rota> novasRotas = new ArrayList<Rota>();
-
-        for (Cidade cidadeOrigem : cidades) {
-            for (Cidade cidadeDestino : cidades) {
-                if(cidadeDestino != cidadeOrigem){
-                    Rota novaRota = new Rota(cidadeOrigem, cidadeDestino, valorInicialFeromonio);
-                    novasRotas.add(novaRota);
-                }
-                
-            }
-        }
-
-        return novasRotas;
-    }
-
+        
+    }   
 }
