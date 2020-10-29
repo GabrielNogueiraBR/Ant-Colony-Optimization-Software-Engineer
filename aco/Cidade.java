@@ -4,7 +4,8 @@ public class Cidade {
     private int numeroCidade;
     private Double coordenadaX;
     private Double coordenadaY;
-    
+	private Formiga formiga;
+	
     public int getNumeroCidade() {
 		return numeroCidade;
 	}
@@ -52,6 +53,15 @@ public class Cidade {
 	public String toString() {
 		return "Cidade [coordenadaX=" + coordenadaX + ", coordenadaY=" + coordenadaY + ", numeroCidade=" + numeroCidade
 				+ "]";
+	}
+
+	public Formiga getFormiga() {
+		return formiga;
+	}
+
+	//adicionando a formiga e definindo sua cidade de origem
+	public void adicionaFormiga() {
+		this.formiga = new Formiga(this);
 	}
 
     
