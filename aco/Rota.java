@@ -2,7 +2,6 @@ package aco;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 //Classe que vai dizer a rota entre duas cidades, trazendo informações como a sua distancia e a taxa de feromonios presente na rota
 public class Rota {
@@ -237,5 +236,15 @@ public class Rota {
 
             return rotasInvertidas;
         }
+    }
+
+    public static Double distanciaTotalEntreRotas(List<Rota> rotas){
+        Double distancia = 0.0;
+
+        for (Rota rota : rotas) {
+            distancia += rota.getDistancia();
+        }
+
+        return distancia;
     }
 }

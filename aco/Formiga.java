@@ -9,6 +9,11 @@ public class Formiga {
     private Double distanciaPercorrida;
     private Double constanteAtualizacaoFeromonio;
     
+    //sobreposicao de metodos em construtores
+    public Formiga(){
+
+    }
+
     public Formiga(Cidade cidadeOrigem, Double constanteAtualizacaoFeromonio) {
         this.cidadeOrigem = cidadeOrigem;
         this.constanteAtualizacaoFeromonio = constanteAtualizacaoFeromonio;
