@@ -6,6 +6,7 @@ import java.util.List;
 public class Formiga {
     private List<Rota> rotasPercorridas = new ArrayList<Rota>();
     private Cidade cidadeOrigem;
+    private Double distanciaPercorrida;
     
 
     public List<Rota> run(List<Rota> rotasDisponiveis, Cidade cidadeAtual){
@@ -64,8 +65,24 @@ public class Formiga {
         return stringRota;
     }
 
+    public Formiga(Cidade cidadeOrigem) {
+        this.cidadeOrigem = cidadeOrigem;
+    }
+
+    public Double getDistanciaPercorrida() {
+        return distanciaPercorrida;
+    }
+
+    //com base na lista de rotas percorridas, atualiza a distancia percorrida pela formiga
+    public void defineDistanciaPercorrida() {
+        Double somatorioDistancia = 0.0;
 
 
+        for (Rota rota : rotasPercorridas) {
+            somatorioDistancia += rota.getDistancia();
+        }
 
+        this.distanciaPercorrida = somatorioDistancia;
 
+    }
 }
