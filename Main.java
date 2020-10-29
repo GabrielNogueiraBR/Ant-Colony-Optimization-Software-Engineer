@@ -125,16 +125,43 @@ public class Main {
             rota.atualizaProbabilidadeEscolha(listaRota);
         }
 
-        Formiga formiga = new Formiga();
-        formiga.setCidadeOrigem(listaCidade.get(0));
 
-        //realizar a primeira iteracao
-        formiga.run(listaRota, formiga.getCidadeOrigem());
+        
+        for (Cidade cidade : listaCidade) {
+            System.out.println("\n\n\n\n");
+            //colocar um formiga em cada cidade
+            cidade.adicionaFormiga();
+            
+            //faz a formiga percorrer todas as rotas com base na cidade de origem
+            cidade.getFormiga().run(listaRota, cidade.getFormiga().getCidadeOrigem());
 
-        //exibe a rota
-        System.out.println(formiga.exibeRotaPercorrida());
+            //atualiza a distancia percorrida por cada formiga
+            cidade.getFormiga().defineDistanciaPercorrida();
+
+            //exibe a rota percorrida pela formiga
+            System.out.println(cidade.getFormiga().exibeRotaPercorrida());
+
+            System.out.println("Distancia Percorrida: " + cidade.getFormiga().getDistanciaPercorrida());
+        }
+
+
+        // Formiga formiga = new Formiga();
+        // formiga.setCidadeOrigem(listaCidade.get(0));
+
+        // //realizar a primeira iteracao
+        // formiga.run(listaRota, formiga.getCidadeOrigem());
+
+        // //exibe a rota
+        // System.out.println(formiga.exibeRotaPercorrida());
+
+        //realizar a evaporacao do feromonio em todas as rotas
+
+        //calcular o feromonio depositado por cada formiga em determinada rota
+
+        //realizar o somatorio do feromonio depositado em cada rota
 
         //atualizar a taxa de feromonios com base nas formigas e nas rotas
+
 
         ler.close();
     }
