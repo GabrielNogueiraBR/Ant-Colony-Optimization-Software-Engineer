@@ -10,7 +10,7 @@ public class AntColonyOptimization {
      public static void run(List<Cidade> listaCidade, int numeroMaximoIteracao, Double influenciaFeromonio, Double influenciaDistancia, Double taxaEvaporacaoFeromonio, Double valorInicialFeromonio, Double constanteAtualizacaoFeromonio, List<Integer> ordemMelhoresRotas) {
         
         List<Rota> listaRota, melhoresRotas;
-        int iteracao = 0;
+        int iteracao = 0, iteracaoDaMelhorRota = 1;
         Double melhorDistanciaEncontrada = 0.0;
         Formiga formigaComMenorPercurso = new Formiga();
 
@@ -62,13 +62,16 @@ public class AntColonyOptimization {
             //definindo a melhor rota percorrida pela formiga nas demais iteracoes
             else if(listaCidade.get(0).getFormiga().getDistanciaPercorrida() < formigaComMenorPercurso.getDistanciaPercorrida()){
                 formigaComMenorPercurso = listaCidade.get(0).getFormiga();
+                iteracaoDaMelhorRota = iteracao + 1;
             }
 
             iteracao++;
-
-        }while(iteracao < numeroMaximoIteracao && listaCidade.get(0).getFormiga().getDistanciaPercorrida() > melhorDistanciaEncontrada);
+        }while(iteracao < numeroMaximoIteracao);  //forcando o numero de iteracoes informado
+        //}while(iteracao < numeroMaximoIteracao && listaCidade.get(0).getFormiga().getDistanciaPercorrida() > melhorDistanciaEncontrada); //para encontrar uma solucao melhor do que a da literatura
         
-        System.out.print("\n\nRotaFinal: ");
+        System.out.println("\n\nTotal de iteracoes: " + iteracao);
+        System.out.println("Iteracao com o melhor resultado: " + iteracaoDaMelhorRota);
+        System.out.print("RotaFinal: ");
         System.out.println(formigaComMenorPercurso.exibeRotaPercorrida());
         System.out.println("Distancia Percorrida na rota: " + formigaComMenorPercurso.getDistanciaPercorrida());
         System.out.println("Melhor caminho encontrado pela literatura: " + melhorDistanciaEncontrada);

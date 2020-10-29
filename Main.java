@@ -149,7 +149,7 @@ public class Main {
         //registra o tempo final de execucao
         tempoFinal = System.currentTimeMillis();
 
-        System.out.println("Tempo decorrido: " + (tempoFinal - tempoInicio)/60 + " (s)");
+        System.out.println("Tempo decorrido: " + (tempoFinal - tempoInicio)/1000 + " (s)");
         
     }   
 }
