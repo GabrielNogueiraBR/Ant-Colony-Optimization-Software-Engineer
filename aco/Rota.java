@@ -2,6 +2,7 @@ package aco;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 //Classe que vai dizer a rota entre duas cidades, trazendo informações como a sua distancia e a taxa de feromonios presente na rota
 public class Rota {
@@ -132,22 +133,26 @@ public class Rota {
     //sorteia uma rota com base em uma lista
     public static int sorteiaRotaPorCidade(List<Rota> rotasDaCidadeOrigem){
         Double porcentagemTotal = 0.0;
+        Double ultimaSomaProbabilidade = 0.0;
         Double sorteio = Math.random(); //valor entre 0.0 e 1.0
         int retorno = 0, indice = 0;
 
+        
         //faz uma agregacao na porcentagem para podermos sortear um numero
         for (Rota rota : rotasDaCidadeOrigem) {
             porcentagemTotal += rota.getProbabilidadeEscolha();
             rota.setSomaProbabilidadeEscolha(porcentagemTotal);
 
-            //definimos aquele valor 0.0001 para ser uma aproximacao
-            if(rota.getSomaProbabilidadeEscolha() <= (sorteio + 0.001)){
+            //definimos aquele valor 0.001 para ser uma aproximacao
+            //if para definir se a probalidade esta entre o valor de sorteio
+            if( ultimaSomaProbabilidade < (sorteio + 0.00001) && (sorteio + 0.00001) <= rota.getSomaProbabilidadeEscolha()){
                 retorno = indice; //indice da rota
             }
 
+            ultimaSomaProbabilidade = porcentagemTotal;
+
             indice++;
         }
-
         //Exemplo
         // soma[0] = 2.16
         // soma[1] = 2.16 + 1.76 = 3.92
@@ -213,6 +218,24 @@ public class Rota {
         return novasRotas;
     }
 
-    
-    
+    public static List<Rota> inverteRota(List<Rota> rotaOriginal){
+
+        List<Rota> rotasInvertidas;
+        Rota rota;
+
+        if(rotaOriginal.size() <= 0){
+            rotasInvertidas = new ArrayList<Rota>();
+            return rotasInvertidas;
+        }
+        else{
+            
+            rota = rotaOriginal.get(0);
+            rotaOriginal.remove(rota);
+
+            rotasInvertidas = inverteRota(rotaOriginal);
+            rotasInvertidas.add(rota);
+
+            return rotasInvertidas;
+        }
+    }
 }

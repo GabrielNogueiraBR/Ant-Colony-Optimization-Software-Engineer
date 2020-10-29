@@ -77,9 +77,14 @@ public class Formiga {
 
     public String exibeRotaPercorrida(){
         String stringRota = "" ;
+        int ultimaRota = 1;
 
         for (Rota rota : rotasPercorridas) {
-            stringRota += rota.getCidadeOrigem().getNumeroCidade() + "-";    
+            stringRota += rota.getCidadeOrigem().getNumeroCidade() + "-";
+            if(ultimaRota == rotasPercorridas.size()){
+                stringRota += rota.getCidadeDestino().getNumeroCidade();
+            }
+            ultimaRota++;  
         }
         return stringRota;
     }
@@ -113,6 +118,14 @@ public class Formiga {
         }
 
         return false;
+    }
+
+    public List<Rota> getRotasPercorridas() {
+        return rotasPercorridas;
+    }
+
+    public void setRotasPercorridas(List<Rota> rotasPercorridas) {
+        this.rotasPercorridas = rotasPercorridas;
     }
 
     

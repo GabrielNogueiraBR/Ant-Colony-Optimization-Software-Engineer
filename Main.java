@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -15,7 +16,7 @@ public class Main {
         int op;
         String nomeArquivo;
         Scanner ler = new Scanner(System.in);
-        List<Cidade> listaCidade = new ArrayList<Cidade>();
+        Long tempoInicio, tempoFinal;
         
 
         //Dados para o AntColonyOptimization
@@ -25,6 +26,8 @@ public class Main {
         Double taxaEvaporacaoFeromonio;
         Double valorInicialFeromonio;
         Double constanteAtualizacaoFeromonio;
+        List<Cidade> listaCidade = new ArrayList<Cidade>();
+
 
         System.out.println("Infome o documento que deseja ler: ");
         System.out.println("[1] - att48.tsp");
@@ -88,36 +91,43 @@ public class Main {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
         System.out.print("Digite o numero de iteracoes desejado:");
-        //numeroMaximoIteracao = Integer.parseInt(ler.nextLine());
-        numeroMaximoIteracao = 100;
+        numeroMaximoIteracao = Integer.parseInt(ler.nextLine());
+        //numeroMaximoIteracao = 5;
 
         System.out.print("Digite o valor de influencia do feromonio (padrao = 1): ");
-        //influenciaFeromonio = Double.parseDouble(ler.nextLine());
+        // influenciaFeromonio = Double.parseDouble(ler.nextLine());
         influenciaFeromonio = 1.0;
 
 
         System.out.print("Digite o valor de influencia da distancia (padrão = 1): ");
-        //influenciaDistancia = Double.parseDouble(ler.nextLine());
+        // influenciaDistancia = Double.parseDouble(ler.nextLine());
         influenciaDistancia = 1.0;
 
         System.out.print("Digite o valor da taxa de evaporacao do feromonio (padrao = 0.01): ");
-        //taxaEvaporacaoFeromonio = Double.parseDouble(ler.nextLine());
+        // taxaEvaporacaoFeromonio = Double.parseDouble(ler.nextLine());
         taxaEvaporacaoFeromonio = 0.01;
 
         System.out.print("Digite o valor inicial do feromonio para todas as rotas (padrao = 0.1): ");
-        //valorInicialFeromonio = Double.parseDouble(ler.nextLine());
+        // valorInicialFeromonio = Double.parseDouble(ler.nextLine());
         valorInicialFeromonio = 0.1;
 
         System.out.print("Digite o valor da constante de atualizacao do feromonio (padrao = 10): ");
-        //constanteAtualizacaoFeromonio = Double.parseDouble(ler.nextLine());
+        // constanteAtualizacaoFeromonio = Double.parseDouble(ler.nextLine());
         constanteAtualizacaoFeromonio = 10.0;
 
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         
         ler.close();
 
+        //registra o tempo de inicio de execucao
+        tempoInicio = System.currentTimeMillis();
+
         AntColonyOptimization.run(listaCidade, numeroMaximoIteracao, influenciaFeromonio, influenciaDistancia, taxaEvaporacaoFeromonio, valorInicialFeromonio, constanteAtualizacaoFeromonio);
 
+        //registra o tempo final de execucao
+        tempoFinal = System.currentTimeMillis();
+
+        System.out.println("Tempo decorrido: " + (tempoFinal - tempoInicio)/60 + " (s)");
         
     }   
 }
