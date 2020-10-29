@@ -7,7 +7,32 @@ public class Formiga {
     private List<Rota> rotasPercorridas = new ArrayList<Rota>();
     private Cidade cidadeOrigem;
     private Double distanciaPercorrida;
+    private Double constanteAtualizacaoFeromonio;
     
+    public Formiga(Cidade cidadeOrigem, Double constanteAtualizacaoFeromonio) {
+        this.cidadeOrigem = cidadeOrigem;
+        this.constanteAtualizacaoFeromonio = constanteAtualizacaoFeromonio;
+    }
+
+    public Cidade getCidadeOrigem() {
+        return cidadeOrigem;
+    }
+
+    public void setCidadeOrigem(Cidade cidadeOrigem) {
+        this.cidadeOrigem = cidadeOrigem;
+    }
+
+    public Double getConstanteAtualizacaoFeromonio() {
+        return constanteAtualizacaoFeromonio;
+    }
+
+    public void setConstanteAtualizacaoFeromonio(Double constanteAtualizacaoFeromonio) {
+        this.constanteAtualizacaoFeromonio = constanteAtualizacaoFeromonio;
+    }
+
+    public Double quantidadeFeromonioDepositado(){
+        return (constanteAtualizacaoFeromonio/distanciaPercorrida);
+    }
 
     public List<Rota> run(List<Rota> rotasDisponiveis, Cidade cidadeAtual){
 
@@ -48,13 +73,7 @@ public class Formiga {
 
     }
 
-    public Cidade getCidadeOrigem() {
-        return cidadeOrigem;
-    }
-
-    public void setCidadeOrigem(Cidade cidadeOrigem) {
-        this.cidadeOrigem = cidadeOrigem;
-    }
+    
 
     public String exibeRotaPercorrida(){
         String stringRota = "" ;
@@ -65,9 +84,7 @@ public class Formiga {
         return stringRota;
     }
 
-    public Formiga(Cidade cidadeOrigem) {
-        this.cidadeOrigem = cidadeOrigem;
-    }
+    
 
     public Double getDistanciaPercorrida() {
         return distanciaPercorrida;
@@ -85,4 +102,18 @@ public class Formiga {
         this.distanciaPercorrida = somatorioDistancia;
 
     }
+
+    //retorna true caso a rota tenha sido percorrida pela formiga
+    public Boolean isRotaPercorrida(Rota rota){
+
+        for (Rota rotaPercorrida : rotasPercorridas) {
+            if(rotaPercorrida.equals(rota)){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    
 }
