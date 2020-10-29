@@ -60,8 +60,8 @@ public class Cidade {
 	}
 
 	//adicionando a formiga e definindo sua cidade de origem
-	public void adicionaFormiga() {
-		this.formiga = new Formiga(this);
+	public void adicionaFormiga(Double constanteAtualizacaoFeromonio) {
+		this.formiga = new Formiga(this, constanteAtualizacaoFeromonio);
 	}
 
     
