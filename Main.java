@@ -49,7 +49,7 @@ public class Main {
                 break;
             case 3:
                 nomeArquivo = "eil51-sem-cabecalho.tsp";
-                nomeArquivoMelhorRota = "eil51.opt.tour-sem-cabecalho";
+                nomeArquivoMelhorRota = "eil51.opt.tour-sem-cabecalho.txt";
                 break;
             default:
                 nomeArquivo = "";
